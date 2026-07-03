@@ -23,7 +23,7 @@
 
 直接開啟網頁即可，無需安裝：
 
-- 線上：GitHub Pages（本 repo 的 Pages 網址）
+- 線上：**https://sancola1219-collab.github.io/boardgames/**
 - 離線：`git clone` 後直接雙擊 `index.html`，或起一個靜態伺服器（例如 `python -m http.server`）
 
 操作：拖曳旋轉視角、滾輪／雙指縮放、點選棋子再點目的地落子。
