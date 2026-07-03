@@ -1,0 +1,137 @@
+/* 共用 UI — 深色棋室風格 */
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bar: #171f2b;
+  --bar-edge: #2c3a4e;
+  --panel: #1c2634;
+  --panel-edge: #35455c;
+  --ink: #e8edf4;
+  --ink-dim: #9fb0c3;
+  --accent: #d9a441;
+  --accent-ink: #241a05;
+  --danger: #c85a4f;
+  --room-a: #3a2a18;
+  --room-b: #120b06;
+}
+
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  background: var(--room-b);
+  color: var(--ink);
+  user-select: none;
+}
+
+/* ---------- 場景 ---------- */
+#stage {
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(120% 90% at 50% 108%, #5a3f22 0%, var(--room-a) 34%, #1d1409 68%, var(--room-b) 100%);
+}
+#scene { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; }
+#scene:active { cursor: grabbing; }
+
+/* ---------- 頂欄 ---------- */
+#topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 20;
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px;
+  background: linear-gradient(180deg, #1d2836 0%, var(--bar) 100%);
+  border-bottom: 1px solid var(--bar-edge);
+  box-shadow: 0 4px 18px rgba(0,0,0,.45);
+}
+#topbar h1 { font-size: 15px; font-weight: 700; letter-spacing: 1px; white-space: nowrap; }
+#topbar h1 a { color: var(--ink); text-decoration: none; }
+#topbar h1 a:hover { color: var(--accent); }
+#status { font-size: 13px; color: var(--ink-dim); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#status b { color: var(--accent); font-weight: 600; }
+
+.btn {
+  font: inherit; font-size: 12.5px; color: var(--ink);
+  background: #232f40; border: 1px solid var(--panel-edge);
+  padding: 6px 12px; border-radius: 8px; cursor: pointer; white-space: nowrap;
+  transition: background .15s, transform .05s;
+}
+.btn:hover { background: #2c3b50; }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: .38; cursor: default; }
+.btn.primary { background: var(--accent); border-color: #e8bb62; color: var(--accent-ink); font-weight: 700; }
+.btn.primary:hover { background: #e5b355; }
+.btn.small { padding: 4px 9px; font-size: 12px; border-radius: 7px; }
+
+/* ---------- 底部提示 ---------- */
+#hint {
+  position: fixed; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 15;
+  font-size: 12px; color: rgba(232,237,244,.55);
+  background: rgba(12,16,22,.5); border: 1px solid rgba(64,80,104,.35);
+  padding: 5px 14px; border-radius: 999px; white-space: nowrap;
+  backdrop-filter: blur(4px); pointer-events: none;
+}
+
+/* ---------- 對話框 ---------- */
+.overlay {
+  position: fixed; inset: 0; z-index: 30;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(5,8,12,.55); backdrop-filter: blur(2px);
+}
+.overlay.hidden, .hidden { display: none !important; }
+.dialog {
+  width: min(420px, calc(100vw - 32px));
+  max-height: calc(100vh - 60px); overflow: auto;
+  background: linear-gradient(180deg, #223047 0%, var(--panel) 100%);
+  border: 1px solid var(--panel-edge); border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.6);
+  padding: 18px;
+}
+.dialog h2 { font-size: 16px; margin-bottom: 12px; }
+.dialog .lbl { font-size: 12px; color: var(--ink-dim); margin: 12px 0 6px; }
+.dialog .desc { font-size: 12px; color: var(--ink-dim); line-height: 1.6; margin-top: 10px; }
+.dialog .row { display: flex; gap: 8px; margin-top: 14px; }
+.dialog .row .btn { flex: 1; padding: 9px 12px; font-size: 13.5px; }
+
+/* 分段選擇 */
+.seg { display: flex; gap: 6px; flex-wrap: wrap; }
+.seg .opt {
+  flex: 1; min-width: 84px;
+  font: inherit; font-size: 13px; color: var(--ink);
+  background: #16202e; border: 1px solid var(--panel-edge);
+  padding: 9px 8px; border-radius: 9px; cursor: pointer; text-align: center;
+  transition: background .15s;
+}
+.seg .opt:hover { background: #1e2b3d; }
+.seg .opt.sel { background: var(--accent); border-color: #e8bb62; color: var(--accent-ink); font-weight: 700; }
+.seg .opt small { display: block; font-size: 10.5px; opacity: .75; margin-top: 2px; font-weight: 400; }
+
+/* 連線對戰 */
+textarea.code {
+  width: 100%; height: 74px; resize: none;
+  font: 11px/1.45 Consolas, monospace; color: var(--ink);
+  background: #101823; border: 1px solid var(--panel-edge); border-radius: 8px; padding: 8px;
+  user-select: text;
+}
+.netstep { font-size: 12.5px; color: var(--ink-dim); margin: 10px 0 5px; }
+.netstep b { color: var(--accent); }
+
+/* 結果橫幅 */
+#banner {
+  position: fixed; left: 50%; top: 42%; transform: translate(-50%,-50%); z-index: 25;
+  text-align: center; pointer-events: none;
+}
+#banner .big {
+  font-size: clamp(30px, 6vw, 52px); font-weight: 800; letter-spacing: 6px;
+  color: var(--accent); text-shadow: 0 4px 24px rgba(0,0,0,.8), 0 0 60px rgba(217,164,65,.35);
+  animation: bannerIn .5s cubic-bezier(.2,1.4,.4,1);
+}
+#banner .sub { font-size: 14px; color: var(--ink); opacity: .85; margin-top: 8px; }
+#banner .actions { margin-top: 18px; pointer-events: auto; }
+@keyframes bannerIn { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: scale(1); } }
+
+/* 手機 */
+@media (max-width: 560px) {
+  #topbar { flex-wrap: wrap; padding: 6px 10px; gap: 6px; }
+  #topbar h1 { font-size: 13.5px; }
+  #status { flex-basis: 100%; order: 9; font-size: 12px; }
+  .btn { padding: 5px 9px; font-size: 12px; }
+  #hint { font-size: 11px; bottom: 8px; max-width: calc(100vw - 20px); white-space: normal; text-align: center; }
+}

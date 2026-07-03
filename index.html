@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D 棋類遊戲 — 第一人稱對弈</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='4' y='4' width='24' height='24' rx='4' fill='%23d9a441'/><circle cx='12' cy='12' r='4' fill='%23171f2b'/><circle cx='20' cy='20' r='4' fill='%23fff'/></svg>">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  min-height: 100vh;
+  font-family: "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+  background: radial-gradient(120% 100% at 50% 110%, #3a2a18 0%, #1d1409 55%, #0d0803 100%);
+  color: #e8edf4;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 48px 20px 40px;
+}
+h1 { font-size: clamp(26px, 5vw, 40px); letter-spacing: 6px; font-weight: 800; }
+h1 span { color: #d9a441; }
+.sub { color: #9fb0c3; margin: 14px 0 40px; font-size: 14.5px; text-align: center; line-height: 1.7; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 288px)); gap: 22px; justify-content: center; width: 100%; max-width: 1000px; }
+a.card {
+  display: block; text-decoration: none; color: inherit;
+  background: linear-gradient(180deg, #223047 0%, #1c2634 100%);
+  border: 1px solid #35455c; border-radius: 16px; overflow: hidden;
+  transition: transform .18s, border-color .18s, box-shadow .18s;
+}
+a.card:hover { transform: translateY(-4px); border-color: #d9a441; box-shadow: 0 18px 44px rgba(0,0,0,.5); }
+.thumb { height: 150px; display: flex; align-items: center; justify-content: center; background: radial-gradient(100% 130% at 50% 120%, #43301a 0%, #241708 100%); }
+.thumb svg { width: 82%; height: 82%; }
+.card .body { padding: 16px 18px 18px; }
+.card h2 { font-size: 18px; margin-bottom: 6px; }
+.card p { font-size: 12.5px; color: #9fb0c3; line-height: 1.65; min-height: 3.2em; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.chip { font-size: 10.5px; color: #d9a441; border: 1px solid rgba(217,164,65,.45); border-radius: 999px; padding: 3px 9px; }
+footer { margin-top: 44px; font-size: 12px; color: #6d7d92; text-align: center; line-height: 1.8; }
+footer a { color: #9fb0c3; }
+</style>
+</head>
+<body>
+<h1>3D <span>棋類遊戲</span></h1>
+<p class="sub">純 HTML + CSS + JavaScript + SVG 打造，零依賴、零建置、零框架。<br>以第一人稱視角坐在棋桌前對弈，可拖曳環顧、縮放視角。</p>
+
+<div class="cards">
+  <a class="card" href="xiangqi/">
+    <div class="thumb">
+      <svg viewBox="0 0 200 120">
+        <g transform="translate(100 62) scale(1 .5) ">
+          <rect x="-86" y="-52" width="172" height="104" rx="4" fill="#c99a5b" stroke="#5f3d1c" stroke-width="2"/>
+          <g stroke="#5f3d1c" stroke-width="1" opacity=".6">
+            <line x1="-70" y1="-38" x2="70" y2="-38"/><line x1="-70" y1="-12" x2="70" y2="-12"/>
+            <line x1="-70" y1="12" x2="70" y2="12"/><line x1="-70" y1="38" x2="70" y2="38"/>
+            <line x1="-40" y1="-38" x2="-40" y2="38"/><line x1="0" y1="-38" x2="0" y2="38"/><line x1="40" y1="-38" x2="40" y2="38"/>
+          </g>
+        </g>
+        <g font-family="serif" font-weight="700" text-anchor="middle">
+          <circle cx="66" cy="46" r="15" fill="#e6c98d" stroke="#6d4a1e" stroke-width="1.6"/>
+          <text x="66" y="52" font-size="15" fill="#b8321f">帥</text>
+          <circle cx="132" cy="66" r="15" fill="#e6c98d" stroke="#6d4a1e" stroke-width="1.6"/>
+          <text x="132" y="72" font-size="15" fill="#26221c">將</text>
+        </g>
+      </svg>
+    </div>
+    <div class="body">
+      <h2>象棋</h2>
+      <p>完整規則：將軍、將死、困斃、飛將、重複局面判和。AI 採迭代加深 α-β 搜尋與吃子靜態延伸。</p>
+      <div class="chips"><span class="chip">電腦對戰</span><span class="chip">三段難度</span><span class="chip">雙人同機</span><span class="chip">連線對戰</span></div>
+    </div>
+  </a>
+
+  <a class="card" href="checkers/">
+    <div class="thumb">
+      <svg viewBox="0 0 200 120">
+        <g transform="translate(100 60) scale(1 .55)">
+          <polygon points="0,-88 76,44 -76,44" fill="#c99a5b" stroke="#5f3d1c" stroke-width="2"/>
+          <polygon points="0,88 76,-44 -76,-44" fill="#c99a5b" stroke="#5f3d1c" stroke-width="2" opacity=".92"/>
+        </g>
+        <g>
+          <circle cx="100" cy="34" r="9" fill="#3d7fd4"/><circle cx="88" cy="46" r="9" fill="#3d7fd4"/><circle cx="112" cy="46" r="9" fill="#3d7fd4"/>
+          <circle cx="100" cy="88" r="9" fill="#d94b35"/><circle cx="88" cy="76" r="9" fill="#d94b35"/><circle cx="112" cy="76" r="9" fill="#d94b35"/>
+          <circle cx="97" cy="31" r="3" fill="rgba(255,255,255,.5)"/><circle cx="97" cy="85" r="3" fill="rgba(255,255,255,.5)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="body">
+      <h2>跳棋</h2>
+      <p>中國跳棋六角星棋盤，單步與連續跳躍，先將 10 顆棋子送進對面尖角者勝（含反堵規則）。</p>
+      <div class="chips"><span class="chip">電腦對戰</span><span class="chip">三段難度</span><span class="chip">雙人同機</span><span class="chip">連線對戰</span></div>
+    </div>
+  </a>
+
+  <a class="card" href="reversi/">
+    <div class="thumb">
+      <svg viewBox="0 0 200 120">
+        <g transform="translate(100 62) scale(1 .5)">
+          <rect x="-80" y="-56" width="160" height="112" rx="4" fill="#2e6b41" stroke="#173a23" stroke-width="2"/>
+          <g stroke="#173a23" stroke-width="1" opacity=".7">
+            <line x1="-40" y1="-56" x2="-40" y2="56"/><line x1="0" y1="-56" x2="0" y2="56"/><line x1="40" y1="-56" x2="40" y2="56"/>
+            <line x1="-80" y1="-19" x2="80" y2="-19"/><line x1="-80" y1="19" x2="80" y2="19"/>
+          </g>
+        </g>
+        <g>
+          <ellipse cx="80" cy="52" rx="13" ry="8" fill="#111"/><ellipse cx="80" cy="49" rx="13" ry="8" fill="#333"/>
+          <ellipse cx="120" cy="72" rx="13" ry="8" fill="#999"/><ellipse cx="120" cy="69" rx="13" ry="8" fill="#f2f0e8"/>
+        </g>
+      </svg>
+    </div>
+    <div class="body">
+      <h2>黑白棋</h2>
+      <p>經典翻轉棋。AI 具局面權重、行動力評估與終盤精算，困難模式殘局幾近完美收官。</p>
+      <div class="chips"><span class="chip">電腦對戰</span><span class="chip">三段難度</span><span class="chip">雙人同機</span><span class="chip">連線對戰</span></div>
+    </div>
+  </a>
+</div>
+
+<footer>
+  第一人稱 3D 視角．拖曳環顧．滾輪/雙指縮放．連線對戰採 WebRTC 點對點免伺服器<br>
+  純前端實作，可直接離線開啟遊玩
+</footer>
+</body>
+</html>
