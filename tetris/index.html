@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>3D 俄羅斯方塊</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2' y='2' width='12' height='12' rx='2' fill='%2342a5f5'/><rect x='16' y='2' width='12' height='12' rx='2' fill='%23f2c14e'/><rect x='2' y='16' width='12' height='12' rx='2' fill='%23c85a4f'/><rect x='16' y='16' width='12' height='12' rx='2' fill='%237cc576'/></svg>">
+</head>
+<body>
+<div id="stage"><svg id="scene"></svg></div>
+<div id="topbar"></div>
+<div id="hint"></div>
+<div id="banner" class="hidden"></div>
+<div id="dlgStart" class="overlay hidden"></div>
+<div id="dlgNet" class="overlay hidden"></div>
+<div id="dpad" class="hidden">
+  <button data-a="rot">⟳</button><button data-a="up">⤓</button><button data-a="hold">⇄</button>
+  <button data-a="left">◀</button><button data-a="down">▼</button><button data-a="right">▶</button>
+  <span></span><span></span><span></span>
+</div>
+<script src="../assets/engine3d.js"></script>
+<script src="../assets/net.js"></script>
+<script src="../assets/shell.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

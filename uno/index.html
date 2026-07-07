@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>3D UNO</title>
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='6' y='3' width='20' height='26' rx='4' fill='%23c0392b' transform='rotate(-8 16 16)'/><text x='16' y='22' font-size='13' text-anchor='middle' fill='%23fff' font-family='Arial' font-weight='900' transform='rotate(-8 16 16)'>U</text></svg>">
+<style>
+#colorPick { text-align:center; }
+#colorPick .sws { display:flex; gap:10px; margin-top:14px; }
+#colorPick .sw { flex:1; height:60px; border-radius:12px; border:2px solid rgba(255,255,255,.25); cursor:pointer; }
+#colorPick .sw:active { transform:scale(.95); }
+</style>
+</head>
+<body>
+<div id="stage"><svg id="scene"></svg></div>
+<div id="topbar"></div>
+<div id="hint"></div>
+<div id="banner" class="hidden"></div>
+<div id="dlgStart" class="overlay hidden"></div>
+<div id="dlgNet" class="overlay hidden"></div>
+<div id="colorPick" class="overlay hidden"></div>
+<script src="../assets/engine3d.js"></script>
+<script src="../assets/cards3d.js"></script>
+<script src="../assets/net.js"></script>
+<script src="../assets/shell.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

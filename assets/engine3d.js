@@ -236,6 +236,37 @@
     return { svg: s, top: { x: pc.x, y: pc.y, rx, ry }, depth: pcm ? pcm.z : (pc ? pc.z : 0) };
   }
 
+  /* 軸對齊長方體：底面中心 (x, yBase, z)，尺寸 sx(寬) sy(高) sz(深)
+     colors: {top, side, dark, stroke}；回傳 {svg, depth} 或 null */
+  function box(view, x, yBase, z, sx, sy, sz, colors) {
+    const c = Object.assign({ top: '#c99a5b', side: '#a3742f', dark: '#7a5127', stroke: 'rgba(0,0,0,.25)' }, colors || {});
+    const x0 = x - sx / 2, x1 = x + sx / 2, z0 = z - sz / 2, z1 = z + sz / 2, y0 = yBase, y1 = yBase + sy;
+    const pts = [[x0, y0, z0], [x1, y0, z0], [x1, y0, z1], [x0, y0, z1], [x0, y1, z0], [x1, y1, z0], [x1, y1, z1], [x0, y1, z1]];
+    const pr = pts.map((p) => view.project(p));
+    if (pr.some((p) => !p)) return null;
+    const midY = (y0 + y1) / 2;
+    const faces = [
+      { i: [4, 5, 6, 7], f: c.top, n: [0, 1, 0], p: [x, y1, z] },
+      { i: [0, 1, 5, 4], f: c.side, n: [0, 0, -1], p: [x, midY, z0] },
+      { i: [2, 3, 7, 6], f: c.side, n: [0, 0, 1], p: [x, midY, z1] },
+      { i: [1, 2, 6, 5], f: c.dark, n: [1, 0, 0], p: [x1, midY, z] },
+      { i: [3, 0, 4, 7], f: c.dark, n: [-1, 0, 0], p: [x0, midY, z] },
+    ];
+    const eye = view.eye;
+    const vis = [];
+    for (const fc of faces) {
+      const toEye = [eye[0] - fc.p[0], eye[1] - fc.p[1], eye[2] - fc.p[2]];
+      if (toEye[0] * fc.n[0] + toEye[1] * fc.n[1] + toEye[2] * fc.n[2] <= 0) continue;
+      const d = view.project(fc.p);
+      vis.push({ fc, depth: d ? d.z : 0 });
+    }
+    vis.sort((a, b) => b.depth - a.depth);
+    let s = '';
+    for (const v of vis) s += `<path d="${pathOf(v.fc.i.map((ii) => pr[ii]), true)}" fill="${v.fc.f}" stroke="${c.stroke}" stroke-width=".6"/>`;
+    const dc = view.project([x, midY, z]);
+    return { svg: s, depth: dc ? dc.z : 0 };
+  }
+
   // 共用 defs（陰影漸層）
   const DEFS = `<radialGradient id="e3dShadow"><stop offset="0%" stop-color="rgba(0,0,0,.55)"/><stop offset="70%" stop-color="rgba(0,0,0,.28)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient>`;
 
@@ -249,7 +280,7 @@
 
   window.E3D = {
     createCamera, camPos, makeView, pickPlane, attachControls,
-    pathOf, circle3D, hull, shadow, stone, cylinder,
+    pathOf, circle3D, hull, shadow, stone, cylinder, box,
     DEFS, ease, fmt,
     vec: { sub, add, mul, dot, cross, len, norm },
   };

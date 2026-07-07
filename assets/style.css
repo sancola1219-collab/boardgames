@@ -127,6 +127,47 @@ textarea.code {
 #banner .actions { margin-top: 18px; pointer-events: auto; }
 @keyframes bannerIn { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: scale(1); } }
 
+/* ---------- 觸控方向鍵 / 動作鍵 ---------- */
+#dpad {
+  position: fixed; right: 14px; bottom: 46px; z-index: 18;
+  display: grid; grid-template-columns: repeat(3, 52px); grid-template-rows: repeat(3, 52px); gap: 4px;
+  opacity: .92;
+}
+#dpad button, .actbtn {
+  font: inherit; font-size: 19px; color: var(--ink);
+  background: rgba(35,47,64,.72); border: 1px solid rgba(64,80,104,.6); border-radius: 12px;
+  cursor: pointer; backdrop-filter: blur(3px);
+  display: flex; align-items: center; justify-content: center;
+  user-select: none; touch-action: manipulation;
+}
+#dpad button:active, .actbtn:active { background: var(--accent); color: var(--accent-ink); }
+#actbar {
+  position: fixed; left: 14px; bottom: 46px; z-index: 18;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.actbtn { width: 62px; height: 46px; font-size: 13px; }
+
+/* ---------- HUD 手牌區 ---------- */
+#hand {
+  position: fixed; left: 50%; bottom: 8px; transform: translateX(-50%); z-index: 16;
+  display: flex; align-items: flex-end; justify-content: center;
+  max-width: calc(100vw - 20px); padding: 6px 10px 4px;
+}
+#hand:empty { display: none; }
+
+/* ---------- 資訊面板（大富翁等） ---------- */
+#panel {
+  position: fixed; left: 10px; top: 56px; z-index: 14;
+  background: rgba(18,26,38,.82); border: 1px solid rgba(64,80,104,.5); border-radius: 12px;
+  padding: 10px 12px; font-size: 12px; line-height: 1.7; min-width: 168px;
+  backdrop-filter: blur(4px);
+}
+#panel:empty { display: none; }
+#panel .pl { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+#panel .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+#panel .pl.cur { color: var(--accent); font-weight: 700; }
+#panel .pl.dead { opacity: .4; text-decoration: line-through; }
+
 /* 手機 */
 @media (max-width: 560px) {
   #topbar { flex-wrap: wrap; padding: 6px 10px; gap: 6px; }

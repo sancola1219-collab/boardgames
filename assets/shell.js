@@ -8,6 +8,7 @@
 
   let CFG = null;
   let sel = { mode: 'ai', diff: 'mid', side: 0 };
+  let selCustom = {};       // 自訂區段（CFG.sections）的選擇
   let paused = false, speed = 1;
 
   function seg(id, opts, cur, cls) {
@@ -26,8 +27,28 @@
     });
   }
 
+  // ---------- 開局對話框（自訂區段版）----------
+  function renderStartCustom() {
+    let html = `<div class="dialog"><h2>${esc(CFG.startTitle || '開始遊戲')}</h2>`;
+    for (const sec of CFG.sections) {
+      if (selCustom[sec.id] === undefined) selCustom[sec.id] = sec.default;
+      html += `<div class="lbl">${esc(sec.label)}</div>` + seg('sec_' + sec.id, sec.options, selCustom[sec.id]);
+    }
+    if (CFG.rulesHtml) html += `<div class="desc">${CFG.rulesHtml}</div>`;
+    html += `<div class="row"><button class="btn primary" id="btnGo">開始</button></div></div>`;
+    $('dlgStart').innerHTML = html;
+    for (const sec of CFG.sections) wireSeg('sec_' + sec.id, (v) => { selCustom[sec.id] = v; });
+    $('btnGo').addEventListener('click', () => {
+      $('dlgStart').classList.add('hidden');
+      hideBanner();
+      CFG.onStart(Object.assign({}, selCustom));
+      refreshBar();
+    });
+  }
+
   // ---------- 開局對話框 ----------
   function renderStart() {
+    if (CFG.sections) { renderStartCustom(); return; }
     const MODES = [
       { id: '2p', label: '雙人對戰' },
       { id: 'ai', label: '與電腦對戰' },
@@ -188,6 +209,14 @@
   }
 
   function refreshBar() {
+    if (CFG.sections) { // 自訂遊戲：依 CFG.bar 顯示
+      const bar = CFG.bar || {};
+      $('btnPause').style.display = bar.pause ? '' : 'none';
+      $('btnSpeed').style.display = bar.speed ? '' : 'none';
+      $('btnUndo').style.display = bar.undo ? '' : 'none';
+      paused = false; $('btnPause').textContent = '暫停';
+      return;
+    }
     curMode = sel.mode === 'net' && netRole ? 'net' : sel.mode;
     const aivai = curMode === 'aivai';
     $('btnPause').style.display = aivai ? '' : 'none';
@@ -227,6 +256,7 @@
     },
     setStatus(html) { $('status').innerHTML = html; },
     setUndoEnabled(b) { $('btnUndo').disabled = !b; },
+    setPaused(b) { paused = b; $('btnPause').textContent = b ? '繼續 ▶' : '暫停'; },
     showBanner, hideBanner, openStart,
     isPaused: () => paused,
     speed: () => speed,
