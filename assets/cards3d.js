@@ -74,5 +74,22 @@
     return { svg: s, depth, center };
   }
 
-  window.Cards3D = { draw, hit, corners };
+  // 標準撲克牌面：rank 1..13（A,2..10,J,Q,K）、suit 's'♠ 'h'♥ 'd'♦ 'c'♣，或 {joker:true}
+  const SUIT = { s: '♠', h: '♥', d: '♦', c: '♣' };
+  const RANK = { 1: 'A', 11: 'J', 12: 'Q', 13: 'K' };
+  function rankLabel(r) { return RANK[r] || ('' + r); }
+  function standardFace(card) {
+    if (card.joker) return { bg: '#fdfbf5', ink: '#b03a2e', edge: '#c9b98f', big: '🃏', bigSize: 0.9, corner: '鬼', cornerInk: '#b03a2e', font: "'Noto Sans TC',sans-serif" };
+    const red = card.suit === 'h' || card.suit === 'd';
+    const ink = red ? '#c62828' : '#20242b';
+    return {
+      bg: '#fdfbf5', ink, edge: '#c9b98f',
+      big: SUIT[card.suit], bigSize: 1.15, bigDy: 0.36,
+      corner: rankLabel(card.rank) + SUIT[card.suit], cornerInk: ink,
+      font: 'serif',
+      rank: rankLabel(card.rank),
+    };
+  }
+
+  window.Cards3D = { draw, hit, corners, standardFace, rankLabel, SUIT };
 })();

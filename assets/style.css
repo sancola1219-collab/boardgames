@@ -147,6 +147,21 @@ textarea.code {
 }
 .actbtn { width: 62px; height: 46px; font-size: 13px; }
 
+/* ---------- 底部動作列（出牌/PASS/要牌…） ---------- */
+#actbar2 {
+  position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 19;
+  display: flex; gap: 10px;
+}
+#actbar2 button {
+  font: inherit; font-size: 15px; font-weight: 700; color: var(--ink);
+  background: #232f40; border: 1px solid var(--panel-edge); border-radius: 10px;
+  padding: 11px 22px; cursor: pointer; backdrop-filter: blur(3px);
+  box-shadow: 0 4px 14px rgba(0,0,0,.4);
+}
+#actbar2 button.primary { background: var(--accent); border-color: #e8bb62; color: var(--accent-ink); }
+#actbar2 button:disabled { opacity: .4; }
+#actbar2 button:active { transform: translateY(1px); }
+
 /* ---------- HUD 手牌區 ---------- */
 #hand {
   position: fixed; left: 50%; bottom: 8px; transform: translateX(-50%); z-index: 16;
