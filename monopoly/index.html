@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>3D 大富翁</title>
+<link rel="stylesheet" href="../assets/style.css?v=2">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='3' y='3' width='26' height='26' rx='4' fill='%23c99a5b' stroke='%235f3d1c' stroke-width='2'/><circle cx='11' cy='11' r='4' fill='%23c85a4f'/><circle cx='21' cy='21' r='4' fill='%235a8fe0'/></svg>">
+<style>
+#setup .prow { display:flex; align-items:center; gap:8px; margin:8px 0; }
+#setup .prow .nm { flex:1; font-size:13px; }
+#setup .seg { flex:0 0 auto; }
+#setup .seg .opt { min-width:56px; padding:6px 8px; font-size:12px; }
+#panel { min-width:200px; }
+#panel .money { color:#e2c274; font-weight:700; }
+#panel .props { font-size:10.5px; color:#8fa0b4; }
+</style>
+</head>
+<body>
+<div id="stage"><svg id="scene"></svg></div>
+<div id="topbar"></div>
+<div id="hint"></div>
+<div id="panel"></div>
+<div id="banner" class="hidden"></div>
+<div id="actbar2" class="hidden"></div>
+<div id="dlgStart" class="overlay hidden"></div>
+<div id="dlgNet" class="overlay hidden"></div>
+<div id="dlgCard" class="overlay hidden"></div>
+<script src="../assets/engine3d.js?v=2"></script>
+<script src="../assets/net.js?v=2"></script>
+<script src="../assets/shell.js?v=2"></script>
+<script src="game.js"></script>
+</body>
+</html>

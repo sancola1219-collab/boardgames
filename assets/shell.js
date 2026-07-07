@@ -48,6 +48,15 @@
 
   // ---------- 開局對話框 ----------
   function renderStart() {
+    if (CFG.customStart) {
+      CFG.customStart($('dlgStart'), (cfg) => {
+        $('dlgStart').classList.add('hidden');
+        hideBanner();
+        CFG.onStart(cfg);
+        refreshBar();
+      });
+      return;
+    }
     if (CFG.sections) { renderStartCustom(); return; }
     const MODES = [
       { id: '2p', label: '雙人對戰' },
@@ -209,7 +218,7 @@
   }
 
   function refreshBar() {
-    if (CFG.sections) { // 自訂遊戲：依 CFG.bar 顯示
+    if (CFG.sections || CFG.customStart) { // 自訂遊戲：依 CFG.bar 顯示
       const bar = CFG.bar || {};
       $('btnPause').style.display = bar.pause ? '' : 'none';
       $('btnSpeed').style.display = bar.speed ? '' : 'none';
